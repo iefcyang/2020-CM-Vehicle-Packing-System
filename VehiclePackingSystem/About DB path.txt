@@ -1,0 +1,1 @@
+﻿Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\VehiclePackingDatabase.mdf;Integrated Security=True

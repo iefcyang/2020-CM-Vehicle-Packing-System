@@ -1,0 +1,1434 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>CALabOrganismGALibrary</name>
+    </assembly>
+    <members>
+        <member name="T:NTU.IIE.CALAB.OrganismGA.BinaryGAModule">
+            <summary>
+             BinaryGA uses byte type to store 0 or 1 values for a binary-coded GA chromosome
+            </summary>
+        </member>
+        <member name="M:NTU.IIE.CALAB.OrganismGA.BinaryGAModule.#ctor(System.Int32)">
+            <summary>
+             Constructor to instantiate an instance of binary encoded GA module.
+            </summary>
+            <param name="numberOfVariables"> Number of variables </param>
+        </member>
+        <member name="M:NTU.IIE.CALAB.OrganismGA.BinaryGAModule.ToString">
+            <summary>
+             The title of this module.
+            </summary>
+            <returns> Module title </returns>
+        </member>
+        <member name="P:NTU.IIE.CALAB.OrganismGA.BinaryGAModule.ParameterSettingsText">
+            <summary>
+             The text content describing the parameter settings defined in this module.
+            </summary>
+        </member>
+        <member name="P:NTU.IIE.CALAB.OrganismGA.BinaryGAModule.CrossoverCuts">
+            <summary>
+             Number of cuts in crossover operation
+            </summary>
+        </member>
+        <member name="M:NTU.IIE.CALAB.OrganismGA.BinaryGAModule.BridgeChromosomeWithOrganism(System.Object[][],System.Int32)">
+            <summary>
+             Function for this module to hook up the organism structure. Note that a module simply
+             deal with a chromosome segment of an organism. Therefore, this function is to map 
+             the chromosome segment of this module to the given organisms.
+            </summary>
+            <param name="organisms"> The set of organisms to be linked </param>
+            <param name="sequence"> The sequence id of the chromosome targeted by this module </param>
+        </member>
+        <member name="M:NTU.IIE.CALAB.OrganismGA.BinaryGAModule.InitializePopulation">
+            <summary>
+             Own implementation of population initialization, which will be called in reset function.
+             Randomly fill in 0 or 1 value to each gene of each parent chromosome.
+            </summary>
+        </member>
+        <member name="M:NTU.IIE.CALAB.OrganismGA.BinaryGAModule.GenerateAPairOfCrossoveredOffspring(System.Int32,System.Int32,System.Int32,System.Int32)">
+            <summary>
+             Own crossover operation procedure to generate and set gene values for a pair of 
+             crossovered offspring by referring to a given pair of parent indexes 
+            </summary>
+            <param name="fartherIdx"> index of farther chromosome </param>
+            <param name="motherIdx"> index of mother chromosome  </param>
+            <param name="child1Idx"> index of child 1 chromosome </param>
+            <param name="child2Idx"> index of child 2 chromosome </param>
+        </member>
+        <member name="M:NTU.IIE.CALAB.OrganismGA.BinaryGAModule.MutateAParentToSetAMutatedChild(System.Int32,System.Int32)">
+            <summary>
+             Function to let this module to generate a mutated offspring chromosome from a given parent.
+            </summary>
+            <param name="parentIdx"> Index to the parent organism </param>
+            <param name="childIdx"> Index to the child to be generated </param>
+            <returns> Success or not </returns>
+        </member>
+        <member name="M:NTU.IIE.CALAB.OrganismGA.BinaryGAModule.PerformGeneBasedMutation(System.Double,System.Int32)">
+            <summary>
+             Function to let this module to perform overall mutation operation. The module need 
+             to determine those genes and associated parent chromosomes to create offspring
+             chromosome.
+            </summary>
+            <param name="mutationRate"> Specified mutation rate</param>
+            <param name="startIdx"> The start index of offspring from mutation </param>
+            <returns> Number of mutated children created </returns>
+        </member>
+        <member name="T:NTU.IIE.CALAB.OrganismGA.GAModule">
+            <summary>
+             The root class for a family of GA evolution modules for different encodings.
+            </summary>
+        </member>
+        <member name="F:NTU.IIE.CALAB.OrganismGA.GAModule.populationSize">
+            <summary>
+             The user specified number of organisms (solution agents).
+            </summary>
+        </member>
+        <member name="F:NTU.IIE.CALAB.OrganismGA.GAModule.optimizationType">
+            <summary>
+             The optimization goal of the associated optimization solver.
+            </summary>
+        </member>
+        <member name="F:NTU.IIE.CALAB.OrganismGA.GAModule.randomizer">
+            <summary>
+             A statically shared random number generator.
+            </summary>
+        </member>
+        <member name="F:NTU.IIE.CALAB.OrganismGA.GAModule.numberOfGenes">
+            <summary>
+             Number of genes specified in this encoding module.
+            </summary>
+        </member>
+        <member name="P:NTU.IIE.CALAB.OrganismGA.GAModule.ParameterSettingsText">
+            <summary>
+             The text content describing the parameter settings defined in this module.
+            </summary>
+        </member>
+        <member name="M:NTU.IIE.CALAB.OrganismGA.GAModule.BridgeChromosomeWithOrganism(System.Object[][],System.Int32)">
+            <summary>
+             Function for this module to hook up the organism structure. Note that a module simply
+             deal with a chromosome segment of an organism. Therefore, this function is to map 
+             the chromosome segment of this module to the given organisms.
+            </summary>
+            <param name="organisms"> The set of organisms to be linked </param>
+            <param name="sequence"> The sequence id of the chromosome targeted by this module </param>
+        </member>
+        <member name="M:NTU.IIE.CALAB.OrganismGA.GAModule.InitializePopulation">
+            <summary>
+             Initialize the gene values of the chromosomes handled by this module.
+            </summary>
+        </member>
+        <member name="M:NTU.IIE.CALAB.OrganismGA.GAModule.GenerateAPairOfCrossoveredOffspring(System.Int32,System.Int32,System.Int32,System.Int32)">
+            <summary>
+             Function to let this module to generate a pair of offspring chromosomes from a pair of parents.
+            </summary>
+            <param name="fartherIdx"> Index to the farther organism </param>
+            <param name="motherIdx"> Index to the mother organism </param>
+            <param name="child1Idx"> Index to the first child to be generated </param>
+            <param name="child2Idx"> Index to the second child to be generated </param>
+            <returns></returns>
+        </member>
+        <member name="M:NTU.IIE.CALAB.OrganismGA.GAModule.MutateAParentToSetAMutatedChild(System.Int32,System.Int32)">
+            <summary>
+             Function to let this module to generate a mutated offspring chromosome from a given parent.
+            </summary>
+            <param name="parentIdx"> Index to the parent organism </param>
+            <param name="childIdx"> Index to the child to be generated </param>
+            <returns></returns>
+        </member>
+        <member name="M:NTU.IIE.CALAB.OrganismGA.GAModule.PerformGeneBasedMutation(System.Double,System.Int32)">
+            <summary>
+             Function to let this module to perform overall mutation operation. The module need 
+             to determine those genes and associated parent chromosomes to create offspring
+             chromosome.
+            </summary>
+            <param name="mutationRate"> Specified mutation rate</param>
+            <param name="startIdx"> The start index of offspring from mutation </param>
+            <returns> Number of mutated children created </returns>
+        </member>
+        <member name="T:NTU.IIE.CALAB.OrganismGA.GASolver">
+            <summary>
+             A generic GA solver that employs at least one GA encoding module to solve an optimization problem
+            </summary>
+        </member>
+        <member name="F:NTU.IIE.CALAB.OrganismGA.GASolver.noImprovementLimit">
+            <summary>
+             Limit of no improvement on best solution so far.
+            </summary>
+        </member>
+        <member name="F:NTU.IIE.CALAB.OrganismGA.GASolver.iterationLimit">
+            <summary>
+             Iteration limit for termination.
+            </summary>
+        </member>
+        <member name="F:NTU.IIE.CALAB.OrganismGA.GASolver.evalutionLimit">
+            <summary>
+             Evaluation limit on objective function for termination.
+            </summary>
+        </member>
+        <member name="F:NTU.IIE.CALAB.OrganismGA.GASolver.cpuTimeLimit">
+            <summary>
+            CPU time limit for GA evolution (in min.)
+            </summary>
+        </member>
+        <member name="M:NTU.IIE.CALAB.OrganismGA.GASolver.CloneProperty(NTU.IIE.CALAB.OrganismGA.GASolver)">
+            <summary>
+             Property setting copy from the other GA solver.
+            </summary>
+            <param name="other"> the other GA solver </param>
+        </member>
+        <member name="P:NTU.IIE.CALAB.OrganismGA.GASolver.ParameterSettingsText">
+            <summary>
+             The text content describing the parameter settings defined in this module.
+            </summary>
+        </member>
+        <member name="M:NTU.IIE.CALAB.OrganismGA.GASolver.ObjectiveEvaluationForOneIntegerArray(System.Object[])">
+            <summary>
+             內定的目標函數計算，僅有一段染色體。
+            </summary>
+            <param name="solution"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NTU.IIE.CALAB.OrganismGA.GASolver.CreatePermutationGASolver(NTU.IIE.CALAB.OrganismGA.OptimizationType,System.Int32,NTU.IIE.CALAB.OrganismGA.OneArraySolutionEvaluation{System.Int32})">
+            <summary>
+             Create a Permutation Encoded GA model whose organism is simply a 
+             chromosome segment encoded in integer type for permutation encoding scheme.
+            </summary>
+            <param name="optimizationType"> To find maximum or minimum </param>
+            <param name="objectiveFunction"> The delegate to the objective evaluation function for a solution represented as an array of integers </param>
+            <param name="numberOfGenes"> Number of genes (integer variables) specified in this GA module </param>
+        </member>
+        <member name="M:NTU.IIE.CALAB.OrganismGA.GASolver.CreateUniformGroupingGASolver(NTU.IIE.CALAB.OrganismGA.OptimizationType,System.Int32,System.Int32,NTU.IIE.CALAB.OrganismGA.OneArraySolutionEvaluation{System.Int32})">
+            <summary>
+             Create a Uniform Grouping Encoded GA model whose organism is 
+             simply a chromosome segment encoded in integer type for uniform grouping optimization.
+             Each item can be grouped into any group.
+            </summary>
+            <param name="optimizationType"> To find maximum or minimum </param>
+            <param name="objectiveFunction"> The delegate to the objective evaluation function for a solution represented as an array of integers </param>
+            <param name="numberOfGenes"> Number of genes (integer variables) specified in this GA module </param>
+            <param name="numberOfGroup"> Number of groups </param>
+        </member>
+        <member name="M:NTU.IIE.CALAB.OrganismGA.GASolver.CreateNonuniformGroupingGASovler(NTU.IIE.CALAB.OrganismGA.OptimizationType,System.Int32,System.Int32[],NTU.IIE.CALAB.OrganismGA.OneArraySolutionEvaluation{System.Int32},System.Boolean)">
+            <summary>
+             Create a Non-uniform Grouping Encoded GA model whose organism is
+             simply a chromosome segment encoded in integer type for nonuniform grouping optimization.
+             Each item has its own limit of group number.
+            </summary>
+            <param name="optimizationType"> To find maximum or minimum </param>
+            <param name="objectiveFunction"> The delegate to the objective evaluation function for a solution represented as an array of integers </param>
+            <param name="acceptExceedingBounds"></param>
+            <param name="numberOfGenes"> Number of genes (items) specified in this GA module </param>
+            <param name="groupBounds"> Numbers of groups allowed for all items </param>
+        </member>
+        <member name="M:NTU.IIE.CALAB.OrganismGA.GASolver.CreateIntegerNumberGASolver(NTU.IIE.CALAB.OrganismGA.OptimizationType,System.Int32,System.Int32[],System.Int32[],NTU.IIE.CALAB.OrganismGA.OneArraySolutionEvaluation{System.Int32},System.Boolean)">
+            <summary>
+             Create an Integer Number Encoded GA model whose organism is simply
+             a chromosome segment encoded in integer type.
+            </summary>
+            <param name="optimizationType"> To find maximum or minimum </param>
+            <param name="objectiveFunction"> The delegate to the objective evaluation function for a solution represented as an array of integers </param>
+            <param name="acceptExceedingBounds"></param>
+            <param name="numberOfGenes"> Number of genes (integer variables) specified in this GA module </param>
+            <param name="lowerBounds"> Lower bounds of variables </param>
+            <param name="upperBounds"> Upper bounds of variables </param>
+        </member>
+        <member name="M:NTU.IIE.CALAB.OrganismGA.GASolver.CreateBinaryGASolver(NTU.IIE.CALAB.OrganismGA.OptimizationType,System.Int32,NTU.IIE.CALAB.OrganismGA.OneArraySolutionEvaluation{System.Byte})">
+            <summary>
+             Create a Binary Number Encoded GA model whose organism 
+             is simply a chromosome segment encoded in Binary values.
+            </summary>
+            <param name="optimizationType"> To find maximum or minimum </param>
+            <param name="objectiveFunction"> The delegate to the objective evaluation function for a solution represented as an array of bytes whose values are 0 or 1 </param>
+            <param name="numberOfGenes"> Number of genes (0 or 1 variables) specified in this GA module </param>
+        </member>
+        <member name="M:NTU.IIE.CALAB.OrganismGA.GASolver.CreateRealNumberGASolver(NTU.IIE.CALAB.OrganismGA.OptimizationType,System.Int32,System.Double[],System.Double[],NTU.IIE.CALAB.OrganismGA.OneArraySolutionEvaluation{System.Double},System.Boolean)">
+            <summary>
+             Create a Real Number Encoded GA model whose organism is 
+             simply a chromosome segment encoded in Double type.
+            </summary>
+            <param name="optimizationType"> To find maximum or minimum </param>
+            <param name="objectiveFunction"> The delegate to the objective evaluation function for a solution represented as an array of integers </param>
+            <param name="acceptExceedingBounds"></param>
+            <param name="lowerBounds"> Lower bounds of variables </param>
+            <param name="upperBounds"> Upper bounds of variables </param>
+            <param name="numberOfGenes"> Number of genes (integer variables) specified in this GA module </param>
+        </member>
+        <member name="M:NTU.IIE.CALAB.OrganismGA.GASolver.CreateIntegerIntegerGASolver(NTU.IIE.CALAB.OrganismGA.GAModuleType,System.Int32,System.Object[],NTU.IIE.CALAB.OrganismGA.GAModuleType,System.Int32,System.Object[],NTU.IIE.CALAB.OrganismGA.OptimizationType,NTU.IIE.CALAB.OrganismGA.TwoArraySolutionEvaluation{System.Int32,System.Int32})">
+            <summary>
+             Create a complex GA model whose organism consists of two integer encoded chromosomes.
+            </summary>
+            <param name="IntegerTypeGA1"> First GA type can be Permutation, Uniform/Non-uniform Grouping, Integer Number </param>
+            <param name="numberOfGenes1"> Gene number of the first chromosome </param>
+            <param name="pars1"> Associated data packed as an object[] array </param>
+            <param name="IntegerTypeGA2"> Second GA type can be Permutation, Uniform/Non-uniform Grouping, Integer Number </param>
+            <param name="numberOfGenes2"> Gene number of the second chromosome </param>
+            <param name="pars2"> Associated data packed as an object[] array </param>
+            <param name="optimizationType"> Optimization type </param>
+            <param name="objectiveFunction"> The objective function that evaluates two int[] encoded chromosomes </param>
+        </member>
+        <member name="M:NTU.IIE.CALAB.OrganismGA.GASolver.CreateBinaryBinaryGASolver(System.Int32,System.Int32,NTU.IIE.CALAB.OrganismGA.OptimizationType,NTU.IIE.CALAB.OrganismGA.TwoArraySolutionEvaluation{System.Byte,System.Byte})">
+            <summary>
+             Create a complex GA model whose organism consists of two byte encoded chromosomes.
+            </summary>
+            <param name="numberOfGenes1"> Gene number of the first chromosome </param>
+            <param name="numberOfGenes2"> Gene number of the second chromosome </param>
+            <param name="optimizationType"> Optimization type </param>
+            <param name="objectiveFunction"> The objective function that evaluates two byte[] encoded chromosomes </param>
+        </member>
+        <member name="M:NTU.IIE.CALAB.OrganismGA.GASolver.CreateNPermutationGASolver(System.Int32[],NTU.IIE.CALAB.OrganismGA.OptimizationType,NTU.IIE.CALAB.OrganismGA.NArraysSolutionEvaluation{System.Int32})">
+            <summary>
+             Create a complex GA model whose organism consists of N permutation encoded chromosomes.
+            </summary>
+            <param name="numberOfGenesArray"> Integer array consists of the numbers of genes in each permutation chromosome</param>
+            <param name="optimizationType"> Optimization problem </param>
+            <param name="objFunction">A function delegate that returns double value while taking an int[][] argument. </param>
+            <returns>A GA solver with N permutation chromosomes</returns>
+        </member>
+        <member name="M:NTU.IIE.CALAB.OrganismGA.GASolver.CreateDoubleDoubleGASolver(System.Int32,System.Object[],System.Int32,System.Object[],NTU.IIE.CALAB.OrganismGA.OptimizationType,NTU.IIE.CALAB.OrganismGA.TwoArraySolutionEvaluation{System.Double,System.Double})">
+            <summary>
+             Create a complex GA model whose organism consists of two double encoded chromosomes.
+            </summary>
+            <param name="numberOfGenes1"> Gene number of the first chromosome </param>
+            <param name="pars1"> Associated data packed as an object[] array </param>
+            <param name="numberOfGenes2"> Gene number of the second chromosome </param>
+            <param name="pars2"> Associated data packed as an object[] array </param>
+            <param name="optimizationType"> Optimization type </param>
+            <param name="objectiveFunction"> The objective function that evaluates two double[] encoded chromosomes </param>
+        </member>
+        <member name="M:NTU.IIE.CALAB.OrganismGA.GASolver.CreateIntegerDoubleGASolver(NTU.IIE.CALAB.OrganismGA.GAModuleType,System.Int32,System.Object[],System.Int32,System.Object[],NTU.IIE.CALAB.OrganismGA.OptimizationType,NTU.IIE.CALAB.OrganismGA.TwoArraySolutionEvaluation{System.Int32,System.Double})">
+            <summary>
+             Create a complex GA model whose organism consists of one int and one double encoded chromosomes.
+            </summary>
+            <param name="IntegerTypeGA1"> First GA type can be Permutation, Uniform/Non-uniform Grouping, Integer Number </param>
+            <param name="numberOfGenes1"> Gene number of the first chromosome </param>
+            <param name="pars1"> Associated data packed as an object[] array </param>
+            <param name="numberOfGenes2">> Gene number of the second chromosome </param>
+            <param name="pars2"> Associated data packed as an object[] array </param>
+            <param name="optimizationType"> Optimization type </param>
+            <param name="objectiveFunction"> The objective function that evaluates an int[] and double[] encoded chromosomes </param>
+        </member>
+        <member name="M:NTU.IIE.CALAB.OrganismGA.GASolver.CreateIntegerBinaryGASolver(NTU.IIE.CALAB.OrganismGA.GAModuleType,System.Int32,System.Object[],System.Int32,NTU.IIE.CALAB.OrganismGA.OptimizationType,NTU.IIE.CALAB.OrganismGA.TwoArraySolutionEvaluation{System.Int32,System.Byte})">
+            <summary>
+             Create a complex GA model whose organism consists of one int and one byte encoded chromosomes.
+            </summary>
+            <param name="IntegerTypeGA1"> First GA type can be Permutation, Uniform/Non-uniform Grouping, Integer Number </param>
+            <param name="numberOfGenes1"> Gene number of the first chromosome </param>
+            <param name="pars1"> Associated data packed as an object[] array </param>
+            <param name="numberOfGenes2">> Gene number of the second chromosome </param>
+            <param name="optimizationType"> Optimization type </param>
+            <param name="objectiveFunction"> The objective function that evaluates an int[] and byte[] encoded chromosomes </param>
+        </member>
+        <member name="M:NTU.IIE.CALAB.OrganismGA.GASolver.CreateDoubleByteGASolver(System.Int32,System.Object[],System.Int32,NTU.IIE.CALAB.OrganismGA.OptimizationType,NTU.IIE.CALAB.OrganismGA.TwoArraySolutionEvaluation{System.Double,System.Byte})">
+            <summary>
+             Create a complex GA model whose organism consists of one double and one byte encoded chromosomes.
+            </summary>
+            <param name="numberOfGenes1"> Gene number of the double encoded chromosome </param>
+            <param name="pars1"> Associated data packed as an object[] array </param>
+            <param name="numberOfGenes2">> Gene number of the byte encoded chromosome </param>
+            <param name="optimizationType"> Optimization type </param>
+            <param name="objectiveFunction"> The objective function that evaluates an double[] and byte[] encoded chromosomes </param>
+        </member>
+        <member name="M:NTU.IIE.CALAB.OrganismGA.GASolver.ConstructTwoModuleInfo(NTU.IIE.CALAB.OrganismGA.GAModuleType,System.Int32,System.Object[],NTU.IIE.CALAB.OrganismGA.GAModuleType,System.Int32,System.Object[])">
+            <summary>
+             Prepare a double[][] array to represent the GA parameters.
+            </summary>
+            <param name="IntegerTypeGA1"></param>
+            <param name="numberOfGenes1"></param>
+            <param name="pars1"></param>
+            <param name="IntegerTypeGA2"></param>
+            <param name="numberOfGenes2"></param>
+            <param name="pars2"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NTU.IIE.CALAB.OrganismGA.GASolver.#ctor(NTU.IIE.CALAB.OrganismGA.OptimizationType,NTU.IIE.CALAB.OrganismGA.ObjectiveFunctionDelegate,NTU.IIE.CALAB.OrganismGA.GAModuleType,System.Int32,System.Object[],NTU.IIE.CALAB.OrganismGA.GAModuleType,System.Int32,System.Object[])">
+            <summary>
+             Specific constructors for creating a GA solver whose organism is a pair of chromosomes.
+             This constructor is for general combinations of two encoding types.
+             The objective function take an organism represented as an array of object; i.e., object[] organism. 
+             Each object is actually a chromosome segment. Therefore each object must be casts as an array 
+             of specific type; e.g., int[] chromosome1 = (int[])organism[0]; double[] chromosome2 = (double[])organism[1]
+            </summary>
+            <param name="optimizationType"> To find maximum or minimum </param>
+            <param name="objectiveFunction"> The delegate to the objective evaluation function </param>
+            <param name="GAType1"> The encoding type of the first GA module </param>
+            <param name="numberOfGenes1"> Number of genes specified in the first GA module </param>
+            <param name="pars1"> Extra parameters used to define the first module  </param>
+            <param name="GAType2"> The encoding type of the second GA module </param>
+            <param name="numberOfGenes2">  Number of genes specified in the first GA module </param>
+            <param name="pars2"> Extra parameters used to define the second module </param>
+        </member>
+        <member name="M:NTU.IIE.CALAB.OrganismGA.GASolver.#ctor(NTU.IIE.CALAB.OrganismGA.OptimizationType,NTU.IIE.CALAB.OrganismGA.ObjectiveFunctionDelegate,System.Object[][])">
+            <summary>
+             General Constructor for constructing a solver that deal with multiple GA modules.
+             To employ an organism based GA solver, user must provide necessary information about each GA module.
+             In addition, optimization type, and a function delegate that computes and returns the objective value 
+             must be provided. 
+             The objective function take an organism represented as an array of object; i.e., object[] organism. 
+             Each object is actually a chromosome segment. Therefore each object must be casts as an array 
+             of specific type; e.g., int[] chromosome1 = (int[])organism[0]; double[] chromosome2 = (double[])organism[1]
+            </summary>
+            <param name="opType">  To find maximum or minimum  </param>
+            <param name="objectFunction"> The delegate to the objective evaluation function  </param>
+            <param name="moduleInfo"> The list of information about GA modules to be defined </param>
+        </member>
+        <member name="M:NTU.IIE.CALAB.OrganismGA.GASolver.EnableCustomInitialization(System.Int32,NTU.IIE.CALAB.OrganismGA.InitializeChromosomeArray{System.Int32})">
+            <summary>
+             Set custom initialization function for a GA module.
+            </summary>
+            <param name="moduleSequence"> The index of the GA module </param>
+            <param name="initFunction"> The function delegate </param>
+            <returns> Success or fail </returns>
+        </member>
+        <member name="M:NTU.IIE.CALAB.OrganismGA.GASolver.EnableCustomInitialization(System.Int32,NTU.IIE.CALAB.OrganismGA.InitializeChromosomeArray{System.Byte})">
+            <summary>
+             Set custom initialization function for a GA module.
+            </summary>
+            <param name="moduleSequence"> The index of the GA module </param>
+            <param name="initFunction"> The function delegate </param>
+            <returns> Success or fail </returns>
+        </member>
+        <member name="M:NTU.IIE.CALAB.OrganismGA.GASolver.EnableCustomInitialization(System.Int32,NTU.IIE.CALAB.OrganismGA.InitializeChromosomeArray{System.Double})">
+            <summary>
+             Set custom initialization function for a GA module.
+            </summary>
+            <param name="moduleSequence"> The index of the GA module </param>
+            <param name="initFunction"> The function delegate </param>
+            <returns> Success or fail </returns>
+        </member>
+        <member name="M:NTU.IIE.CALAB.OrganismGA.GASolver.CreateASpecificGASolver(NTU.IIE.CALAB.OrganismGA.OptimizationType,NTU.IIE.CALAB.OrganismGA.ObjectiveFunctionDelegate,System.Object[][],System.Boolean)">
+            <summary>
+             Used by the constructor to allocate the necessary memory for the object.
+            </summary>
+            <param name="optimizationType">  To find maximum or minimum  </param>
+            <param name="objectFunction"> The delegate to the objective evaluation function </param>
+            <param name="moduleInfo"> The list of module information </param>
+            <param name="acceptExceedingBounds"> Default is false </param>
+        </member>
+        <member name="P:NTU.IIE.CALAB.OrganismGA.GASolver.Organisms">
+            <summary>
+             Read-only access to the contents of the set of organisms
+            </summary>
+        </member>
+        <member name="P:NTU.IIE.CALAB.OrganismGA.GASolver.GASolvers">
+            <summary>
+             The list of encoded chromosomes.
+            </summary>
+        </member>
+        <member name="P:NTU.IIE.CALAB.OrganismGA.GASolver.PopulationSize">
+            <summary>
+             Size of population, which is editable by the user.
+            </summary>
+        </member>
+        <member name="P:NTU.IIE.CALAB.OrganismGA.GASolver.CrossoverRate">
+            <summary>
+             Crossover rate for the base of the population.
+            </summary>
+        </member>
+        <member name="P:NTU.IIE.CALAB.OrganismGA.GASolver.MutationRate">
+            <summary>
+             Mutation rate for the base of the total number of genes in the population.
+            </summary>
+        </member>
+        <member name="P:NTU.IIE.CALAB.OrganismGA.GASolver.SelectionMode">
+            <summary>
+             Genetic operation of the selection.
+            </summary>
+        </member>
+        <member name="P:NTU.IIE.CALAB.OrganismGA.GASolver.IterationExitEnabled">
+            <summary>
+            Enable or disable termination condition on iteration reaching specified limit.
+            </summary>
+        </member>
+        <member name="P:NTU.IIE.CALAB.OrganismGA.GASolver.IterationLimit">
+            <summary>
+            The iteration limit to terminate the GA evolution.
+            </summary>
+        </member>
+        <member name="P:NTU.IIE.CALAB.OrganismGA.GASolver.IterationCount">
+            <summary>
+             Current count on iterations advanced.
+            </summary>
+        </member>
+        <member name="P:NTU.IIE.CALAB.OrganismGA.GASolver.EvaluationExitEnabled">
+            <summary>
+            Enable or disable termination condition on objective function evaluation reaching specified limit.
+            </summary>
+        </member>
+        <member name="P:NTU.IIE.CALAB.OrganismGA.GASolver.EvalutionLimit">
+            <summary>
+             The count limit for objective function evaluations to stop the optimization procedures.
+            </summary>
+        </member>
+        <member name="P:NTU.IIE.CALAB.OrganismGA.GASolver.EvaluationCount">
+            <summary>
+             Current count on objective function evaluations.
+            </summary>
+        </member>
+        <member name="P:NTU.IIE.CALAB.OrganismGA.GASolver.NoImprovementExitEnabled">
+            <summary>
+            Enable or disable termination condition on successive counts on improvement on best solution reaching the specified limit.
+            </summary>
+        </member>
+        <member name="P:NTU.IIE.CALAB.OrganismGA.GASolver.NoImprovementLimit">
+            <summary>
+             The count limit for no improvement to stop the optimization procedures.
+            </summary>
+        </member>
+        <member name="P:NTU.IIE.CALAB.OrganismGA.GASolver.NoImprovementCount">
+            <summary>
+             Current count on successive no improvement on best solution.
+            </summary>
+        </member>
+        <member name="P:NTU.IIE.CALAB.OrganismGA.GASolver.CpuTimeExitEnabled">
+            <summary>
+            Enable or disable termination condition on CPU execution time reaching the specified limit.
+            </summary>
+        </member>
+        <member name="P:NTU.IIE.CALAB.OrganismGA.GASolver.CPUTimeLimit">
+            <summary>
+             CPU time limit in seconds to stop the optimization procedures.
+            </summary>
+        </member>
+        <member name="P:NTU.IIE.CALAB.OrganismGA.GASolver.CpuTimeCount">
+            <summary>
+             Current CPU time elapsed.
+            </summary>
+        </member>
+        <member name="P:NTU.IIE.CALAB.OrganismGA.GASolver.ExecutionExitCondition">
+            <summary>
+             The condition that end the execution.
+            </summary>
+        </member>
+        <member name="P:NTU.IIE.CALAB.OrganismGA.GASolver.IterationBestObjective">
+            <summary>
+             The objective value of the iteration best solution
+            </summary>
+        </member>
+        <member name="P:NTU.IIE.CALAB.OrganismGA.GASolver.IterationAverage">
+            <summary>
+             The objective average of the objective values obtained by the population.
+            </summary>
+        </member>
+        <member name="P:NTU.IIE.CALAB.OrganismGA.GASolver.SoFarTheBestObjective">
+            <summary>
+             The objective value of the so far the best solution.
+            </summary>
+        </member>
+        <member name="P:NTU.IIE.CALAB.OrganismGA.GASolver.SoFarTheBestSolution">
+            <summary>
+             The object list compose the so far the best solution.
+            </summary>
+        </member>
+        <member name="M:NTU.IIE.CALAB.OrganismGA.GASolver.SetExecutionDetails(System.Int32)">
+            <summary>
+             Automatically set execution parameters to accomplish either a fast execution or a deep execution.
+            </summary>
+            <param name="level"></param>
+        </member>
+        <member name="M:NTU.IIE.CALAB.OrganismGA.GASolver.ResetDataStructure">
+            <summary>
+             Reset evolution related data structure.
+            </summary>
+        </member>
+        <!-- 已忽略成員 "M:NTU.IIE.CALAB.OrganismGA.GASolver.Reset(System.Object[])" 中格式錯誤的 XML 註解 -->
+        <member name="M:NTU.IIE.CALAB.OrganismGA.GASolver.RandomizeIndexes(System.Int32)">
+            <summary>
+             This function setup the indexes from 0 to upLimit-1 in index array (int[] indexes).
+             Then, shuffle their orders randomly. 
+             This function is called to shuffle the index orders of parent population to support 
+             pair-wise crossover operation. If x pairs of parents are to be crossovered, then
+             the first 2x indexes are the chromosome indexes of the x pair parents.
+            </summary>
+            <param name="upLimit"></param>
+        </member>
+        <member name="M:NTU.IIE.CALAB.OrganismGA.GASolver.InitializePopulation">
+            <summary>
+             Called in reset function. Overridden by the derived classes to fill-in
+             populationSize chromosomes with gene values of their data types.
+            </summary>
+        </member>
+        <member name="P:NTU.IIE.CALAB.OrganismGA.GASolver.MutationMode">
+            <summary>
+             The text content describing the parameter settings defined in this module.
+            </summary>
+        </member>
+        <member name="M:NTU.IIE.CALAB.OrganismGA.GASolver.ExecuteToEnd">
+            <summary>
+             Default method that carryout the whole GA computation without any interruption.
+            </summary>
+        </member>
+        <member name="M:NTU.IIE.CALAB.OrganismGA.GASolver.TerminationConditionMet">
+            <summary>
+             A function that determine whether stopping condition is met. By default, the iteration 
+             limit is used and checked for termination. Derived class can override it.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:NTU.IIE.CALAB.OrganismGA.GASolver.ExecuteOneIteration">
+            <summary>
+             Standard GA computation procedure. However, derived classes may override it.
+            </summary>
+        </member>
+        <member name="E:NTU.IIE.CALAB.OrganismGA.GASolver.IterationAdvanced">
+            <summary>
+             Event for subscription when an iteration is accomplished.
+            </summary>
+        </member>
+        <member name="M:NTU.IIE.CALAB.OrganismGA.GASolver.ComputeObjectiveValueOfAnOrganism(System.Int32)">
+            <summary>
+             Evaluate the objective of an organism.
+            </summary>
+            <param name="id"> The index to the targeted organism </param>
+            <returns></returns>
+        </member>
+        <member name="M:NTU.IIE.CALAB.OrganismGA.GASolver.ComputeObjectiveValuesAndUpdateBestInfo">
+            <summary>
+             Standard function that evaluates original objective values for parent and children chromosomes.
+             During the computation, iteration best is identified and checked with the so far the best.
+             The so far the best objective and solution will be updated, if the iteration best surpass its value.
+             Specifically, this function calls the user-supplied objective value evaluation function delegate to
+             evaluate each chromosome and put value to objectiveValues array. 
+            </summary>
+        </member>
+        <member name="M:NTU.IIE.CALAB.OrganismGA.GASolver.SetSoFarTheBestValueAndSolution(System.Int32)">
+            <summary>
+             Replace the so far the be objective and solution
+            </summary>
+            <param name="iterationBest"> The index to the organism set </param>
+        </member>
+        <member name="M:NTU.IIE.CALAB.OrganismGA.GASolver.UpdateBestInfo(System.Int32)">
+            <summary>
+             Check if the iteration best can replace the so far the best objective and solution.
+            </summary>
+            <param name="iterationBest"> The index to the iteration best </param>
+            <returns> Replacement is successful or not </returns>
+        </member>
+        <member name="M:NTU.IIE.CALAB.OrganismGA.GASolver.SetFitnessFromObjectives">
+            <summary>
+             This function convert original objective values into positive fitness values, such that
+             the better chromosome receives the larger amount of fitness. Notice that the worst one
+             still receive the least amount of positive fitness value.
+             Specifically, the function transform each value in objectiveValues array to the value in
+             fitnessValues array.
+            </summary>
+        </member>
+        <member name="M:NTU.IIE.CALAB.OrganismGA.GASolver.PerformCrossoverOperation">
+            <summary>
+             Standard crossover operation in a GA iteration. With the help of a shuffled index array (indexes array)
+             parent chromosomes are paired for crossover operation.
+             This standard function calls derived class overridden generateAPairOfCrossoveredOffspring() function to 
+             let that function access parent chromosome (via indexes) and set gene values for the children chromosome
+             (via indexes).
+            </summary>
+        </member>
+        <member name="M:NTU.IIE.CALAB.OrganismGA.GASolver.CustomCrossoverAPairOfParentsGetTwoChildren(System.Int32,System.Int32,System.Int32,System.Int32)">
+            <summary>
+             
+            </summary>
+            <param name="fartherIdx"></param>
+            <param name="motherIdx"></param>
+            <param name="child1Idx"></param>
+            <param name="child2Idx"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NTU.IIE.CALAB.OrganismGA.GASolver.SimulateMutatedGenesMarkingAndPackParentIndexesReturnBound">
+            <summary>
+             This function simulate the traditional mutation operation on gene levels.
+             Mutated genes are selected and corresponding parent is identified.
+             Mutated Parent indexes are packed in indexes array and the number of mutated
+             parents is returned.
+            </summary>
+            <returns> number of mutated parents </returns>
+        </member>
+        <member name="M:NTU.IIE.CALAB.OrganismGA.GASolver.GenerateAPairOfCrossoveredOffspring(System.Int32,System.Int32,System.Int32,System.Int32)">
+            <summary>
+             Given two parent indexes, and two children indexes, this function perform crossover operation. The gene values 
+             of the children will be set by this function. This function must be overridden by the derived classes.
+            </summary>
+            <param name="fartherIdx"> index of farther chromosome </param>
+            <param name="motherIdx"> index of mother chromosome  </param>
+            <param name="child1Idx"> index of child 1 chromosome </param>
+            <param name="child2Idx"> index of child 2 chromosome </param>
+        </member>
+        <member name="M:NTU.IIE.CALAB.OrganismGA.GASolver.MutateAParentToSetAMutatedChild(System.Int32,System.Int32)">
+            <summary>
+             
+            </summary>
+            <param name="pid"></param>
+            <param name="cid"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NTU.IIE.CALAB.OrganismGA.GASolver.PerformGeneBasedMutateOperation">
+            <summary>
+             This function conducts one of the primary operation in GA computation. Since different GA codings had different
+             mutation operations, no standard mutation operation is available.
+             Derived class must override this function.
+            </summary>
+        </member>
+        <member name="M:NTU.IIE.CALAB.OrganismGA.GASolver.PerformChromosomeBasedMutationOperation">
+            <summary>
+             Perform mutation for chromosome base mutation mode, where the number of mutated children 
+             is determined first, and then parents are cloned to randomly mutate their genes.
+            </summary>
+        </member>
+        <member name="M:NTU.IIE.CALAB.OrganismGA.GASolver.GetBestChromosomeIDs(System.Int32)">
+            <summary>
+             Object a few best organisms
+            </summary>
+            <param name="number"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NTU.IIE.CALAB.OrganismGA.GASolver.PerformSelectionOperation">
+            <summary>
+             This function provide standard GA selection operation. However, it allowed derived classes to override it.
+             Two selection modes are provided in this function: deterministic and stochastic.
+            </summary>
+        </member>
+        <member name="M:NTU.IIE.CALAB.OrganismGA.GASolver.ReplaceOneChromosomeWithTheOther(System.Int32,System.Int32)">
+            <summary>
+             Replace gene values of an indexed chromosome with another one.
+            </summary>
+            <param name="one">Index of the chromosome to be replaced.</param>
+            <param name="theother">Index of the chromosome to be duplicated</param>
+        </member>
+        <member name="T:NTU.IIE.CALAB.OrganismGA.ObjectiveFunctionDelegate">
+            <summary>
+             The objective function delegate that represents the objective evaluation function for the GA evolution.
+             The function take an organism input parameter to evaluate its objective value.
+             The organism is represented as an array of object. Each element is a chromosome segment. Therefore, in 
+             the function programmer needs to cast each element to an array of the data type that encodes the chromosome.
+            </summary>
+            <param name="organism"> The organism to be evaluated. Note that an organism consists of a set of encoded chromosomes. </param>
+            <returns></returns>
+        </member>
+        <member name="T:NTU.IIE.CALAB.OrganismGA.OneArraySolutionEvaluation`1">
+            <summary>
+             Object function delegate that evaluates a chromosome encoded in type T. This case is 
+             for a GA solver whose organism simply consists of a chromosome segment.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="chromosome"></param>
+            <returns></returns>
+        </member>
+        <member name="T:NTU.IIE.CALAB.OrganismGA.NArraysSolutionEvaluation`1">
+            <summary>
+             Object function delegate that evaluates an array of chromosomes encoded in type T. This case is 
+             for a GA solver whose organism consists of an array of chromosomes encoded in the same type. 
+             For example, a solution consists of 3 permutation encoded chromosomes with different sizes.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="chromosomeArray"></param>
+            <returns></returns>
+        </member>
+        <member name="T:NTU.IIE.CALAB.OrganismGA.TwoArraySolutionEvaluation`2">
+            <summary>
+             Object function delegate that evaluates two chromosomes encoded in type S and T,
+             respectively. This case is for a GA solver whose organism simply consists of
+             a pair of chromosomes.
+            </summary>
+            <typeparam name="S"> The encoded type of the first chromosome </typeparam>
+            <typeparam name="T"> The encoded type of the second chromosome </typeparam>
+            <param name="chromosome1"> The first chromosome segment </param>
+            <param name="chromosome2"> The second chromosome segment</param>
+            <returns></returns>
+        </member>
+        <member name="T:NTU.IIE.CALAB.OrganismGA.GAModuleType">
+            <summary>
+             The type of chromosome segments (modules)
+            </summary>
+        </member>
+        <member name="F:NTU.IIE.CALAB.OrganismGA.GAModuleType.Binary">
+            <summary>
+             Binary number encoded
+            </summary>
+        </member>
+        <member name="F:NTU.IIE.CALAB.OrganismGA.GAModuleType.Permutation">
+            <summary>
+             Permutation integer encoded
+            </summary>
+        </member>
+        <member name="F:NTU.IIE.CALAB.OrganismGA.GAModuleType.UniformGrouping">
+            <summary>
+             Uniform Grouping integer encoded
+            </summary>
+        </member>
+        <member name="F:NTU.IIE.CALAB.OrganismGA.GAModuleType.NonUniformGroupoing">
+            <summary>
+            Non-uniform Grouping integer encoded
+            </summary>
+        </member>
+        <member name="F:NTU.IIE.CALAB.OrganismGA.GAModuleType.IntegerNumber">
+            <summary>
+             Integer number encoded 
+            </summary>
+        </member>
+        <member name="F:NTU.IIE.CALAB.OrganismGA.GAModuleType.RealNumber">
+            <summary>
+             Real number encoded
+            </summary>
+        </member>
+        <member name="T:NTU.IIE.CALAB.OrganismGA.OptimizationType">
+            <summary>
+             Type of optimization problem.
+            </summary>
+        </member>
+        <member name="F:NTU.IIE.CALAB.OrganismGA.OptimizationType.Min">
+            <summary>
+            A minimization problem
+            </summary>
+        </member>
+        <member name="F:NTU.IIE.CALAB.OrganismGA.OptimizationType.Max">
+            <summary>
+            A maximization problem
+            </summary>
+        </member>
+        <member name="F:NTU.IIE.CALAB.OrganismGA.OptimizationType.Goal">
+            <summary>
+            A goal matching problem
+            </summary>
+        </member>
+        <member name="T:NTU.IIE.CALAB.OrganismGA.SelectionMode">
+            <summary>
+             Type of GA selection procedure
+            </summary>
+        </member>
+        <member name="F:NTU.IIE.CALAB.OrganismGA.SelectionMode.Deterministic">
+            <summary>
+            No uniqueness in deterministic mode
+            </summary>
+        </member>
+        <member name="F:NTU.IIE.CALAB.OrganismGA.SelectionMode.Stochastic">
+            <summary>
+            Stochastic is pure
+            </summary>
+        </member>
+        <member name="F:NTU.IIE.CALAB.OrganismGA.SelectionMode.UniqueCheckGenes">
+            <summary>
+            UniqueCheckGenes contains Deterministic
+            </summary>
+        </member>
+        <member name="F:NTU.IIE.CALAB.OrganismGA.SelectionMode.UniqueCheckObjective">
+            <summary>
+            UniqueCheckObjective contains Deterministic
+            </summary>
+        </member>
+        <member name="T:NTU.IIE.CALAB.OrganismGA.TerminationCondition">
+            <summary>
+             Case of a termination of GA computation.
+            </summary>
+        </member>
+        <member name="F:NTU.IIE.CALAB.OrganismGA.TerminationCondition.StillRunning">
+            <summary>
+             The evolution is still running.
+            </summary>
+        </member>
+        <member name="F:NTU.IIE.CALAB.OrganismGA.TerminationCondition.IterationLimitReached">
+            <summary>
+             The termination happens at the iteration count reached the limit.
+            </summary>
+        </member>
+        <member name="F:NTU.IIE.CALAB.OrganismGA.TerminationCondition.ObjectiveEvaluationExceeded">
+            <summary>
+             The termination happens at the objective function evaluation count reached the limit.
+            </summary>
+        </member>
+        <member name="F:NTU.IIE.CALAB.OrganismGA.TerminationCondition.NoImprovCountLimitReached">
+            <summary>
+             The termination happens at the count of no successive improvement reached the limit.
+            </summary>
+        </member>
+        <member name="F:NTU.IIE.CALAB.OrganismGA.TerminationCondition.CPUTimeLimitReached">
+            <summary>
+             The termination happens at the CPU time spent reached the specified limit.
+            </summary>
+        </member>
+        <member name="T:NTU.IIE.CALAB.OrganismGA.MutationMode">
+            <summary>
+             Mutation operation mode selection.
+            </summary>
+        </member>
+        <member name="F:NTU.IIE.CALAB.OrganismGA.MutationMode.ChromosomeBased">
+            <summary>
+             Determine number of mutated organisms first then clone and mutate them.
+            </summary>
+        </member>
+        <member name="F:NTU.IIE.CALAB.OrganismGA.MutationMode.GeneBased">
+            <summary>
+             Determine the locations of mutated genes first, the identify their parents to generate mutated children.
+            </summary>
+        </member>
+        <member name="T:NTU.IIE.CALAB.OrganismGA.CustomInitializationRatio">
+            <summary>
+             When custom initialization function is specified, the ratio of population 
+             initialization is specified by t
+            </summary>
+        </member>
+        <member name="F:NTU.IIE.CALAB.OrganismGA.CustomInitializationRatio.NoneAvailable">
+            <summary>
+             No ratio is available, since no custom initialization is applicable
+            </summary>
+        </member>
+        <member name="F:NTU.IIE.CALAB.OrganismGA.CustomInitializationRatio.OnePercent">
+            <summary>
+             Just one organism is custom initialized by provided custom initialization function
+            </summary>
+        </member>
+        <member name="F:NTU.IIE.CALAB.OrganismGA.CustomInitializationRatio.OnlyOne">
+            <summary>
+             Only 1% of the population is custom initialized.
+            </summary>
+        </member>
+        <member name="F:NTU.IIE.CALAB.OrganismGA.CustomInitializationRatio.OneTenth">
+            <summary>
+             Only 10% of the population is custom initialized.
+            </summary>
+        </member>
+        <member name="F:NTU.IIE.CALAB.OrganismGA.CustomInitializationRatio.TwoTenth">
+            <summary>
+             Only 20% of the population is custom initialized.
+            </summary>
+        </member>
+        <member name="F:NTU.IIE.CALAB.OrganismGA.CustomInitializationRatio.ThreeTenth">
+            <summary>
+             Only 30% of the population is custom initialized.
+            </summary>
+        </member>
+        <member name="F:NTU.IIE.CALAB.OrganismGA.CustomInitializationRatio.FourTenth">
+            <summary>
+             Only 40% of the population is custom initialized.
+            </summary>
+        </member>
+        <member name="F:NTU.IIE.CALAB.OrganismGA.CustomInitializationRatio.FiveTenth">
+            <summary>
+             50% of the population is custom initialized.
+            </summary>
+        </member>
+        <member name="F:NTU.IIE.CALAB.OrganismGA.CustomInitializationRatio.SixTenth">
+            <summary>
+             60% of the population is custom initialized.
+            </summary>
+        </member>
+        <member name="F:NTU.IIE.CALAB.OrganismGA.CustomInitializationRatio.SevenTenth">
+            <summary>
+             70% of the population is custom initialized.
+            </summary>
+        </member>
+        <member name="F:NTU.IIE.CALAB.OrganismGA.CustomInitializationRatio.EightTenth">
+            <summary>
+             80% of the population is custom initialized.
+            </summary>
+        </member>
+        <member name="F:NTU.IIE.CALAB.OrganismGA.CustomInitializationRatio.NineTenth">
+            <summary>
+             90% of the population is custom initialized.
+            </summary>
+        </member>
+        <member name="F:NTU.IIE.CALAB.OrganismGA.CustomInitializationRatio.All">
+            <summary>
+             All organisms of the population are custom initialized.
+            </summary>
+        </member>
+        <member name="T:NTU.IIE.CALAB.OrganismGA.OrganismInitializationDelegate">
+            <summary>
+             Custom function delegate for setting values of an organism
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:NTU.IIE.CALAB.OrganismGA.GroupingGAModule">
+            <summary>
+             GA operation module for an integer grouping encoding chromosome.
+            </summary>
+        </member>
+        <member name="M:NTU.IIE.CALAB.OrganismGA.GroupingGAModule.#ctor(System.Int32,System.Int32)">
+            <summary>
+             Constructor of an integral grouping encoding GA module. All
+             items share the same group selection.
+            </summary>
+            <param name="numberOfVariables"> Number of items </param>
+            <param name="groupNumber"> Number of groups </param>
+        </member>
+        <member name="M:NTU.IIE.CALAB.OrganismGA.GroupingGAModule.#ctor(System.Int32,System.Int32[])">
+            <summary>
+             Constructor of an integral grouping encoding GA module, where each
+             item has its own number of group selections. 
+            </summary>
+            <param name="numberOfVariables"> Number of items </param>
+            <param name="groupBounds"> The numbers of group selection of all items </param>
+        </member>
+        <member name="M:NTU.IIE.CALAB.OrganismGA.GroupingGAModule.ToString">
+            <summary>
+             The title of this module.
+            </summary>
+            <returns> Module title </returns>
+        </member>
+        <member name="P:NTU.IIE.CALAB.OrganismGA.GroupingGAModule.ParameterSettingsText">
+            <summary>
+             The text content describing the parameter settings defined in this module.
+            </summary>
+        </member>
+        <member name="P:NTU.IIE.CALAB.OrganismGA.GroupingGAModule.CrossoverType">
+            <summary>
+             Permutation encoding crossover type; whose value is an instance of enum type GroupingCrossOver
+            </summary>
+        </member>
+        <member name="P:NTU.IIE.CALAB.OrganismGA.GroupingGAModule.MutationType">
+            <summary>
+             Mutation type for an integer permutation encoding GA problem; whose value is an instance of enum type GroupingMutation
+            </summary>
+        </member>
+        <member name="P:NTU.IIE.CALAB.OrganismGA.GroupingGAModule.NumberOfGroups">
+            <summary>
+             In uniform grouping, the number of groups.
+            </summary>
+        </member>
+        <member name="M:NTU.IIE.CALAB.OrganismGA.GroupingGAModule.BridgeChromosomeWithOrganism(System.Object[][],System.Int32)">
+            <summary>
+             Function for this module to hook up the organism structure. Note that a module simply
+             deal with a chromosome segment of an organism. Therefore, this function is to map 
+             the chromosome segment of this module to the given organisms.
+            </summary>
+            <param name="organisms"> The set of organisms to be linked </param>
+            <param name="sequence"> The sequence id of the chromosome targeted by this module </param>
+        </member>
+        <member name="M:NTU.IIE.CALAB.OrganismGA.GroupingGAModule.InitializePopulation">
+            <summary>
+             Initialize the gene values (group selection ID) of the chromosomes (items)handled by this module.
+            </summary>
+        </member>
+        <member name="M:NTU.IIE.CALAB.OrganismGA.GroupingGAModule.GenerateAPairOfCrossoveredOffspring(System.Int32,System.Int32,System.Int32,System.Int32)">
+            <summary>
+             Function to let this module to generate a pair of offspring chromosomes from a pair of parents.
+            </summary>
+            <param name="fartherIdx"> Index to the farther organism </param>
+            <param name="motherIdx"> Index to the mother organism </param>
+            <param name="child1Idx"> Index to the first child to be generated </param>
+            <param name="child2Idx"> Index to the second child to be generated </param>
+            <returns></returns>
+        </member>
+        <member name="M:NTU.IIE.CALAB.OrganismGA.GroupingGAModule.MutateAParentToSetAMutatedChild(System.Int32,System.Int32)">
+            <summary>
+             Function to let this module to generate a mutated offspring chromosome from a given parent.
+            </summary>
+            <param name="parentIdx"> Index to the parent organism </param>
+            <param name="childIdx"> Index to the child to be generated </param>
+            <returns></returns>
+        </member>
+        <member name="T:NTU.IIE.CALAB.OrganismGA.GroupingCrossOver">
+            <summary>
+             Enumerations of crossover operators for a grouping encoded GA module.
+            </summary>
+        </member>
+        <member name="F:NTU.IIE.CALAB.OrganismGA.GroupingCrossOver.OnePoint">
+            <summary>
+             One point cut
+            </summary>
+        </member>
+        <member name="F:NTU.IIE.CALAB.OrganismGA.GroupingCrossOver.TwoPoint">
+            <summary>
+             Two-point cut
+            </summary>
+        </member>
+        <member name="F:NTU.IIE.CALAB.OrganismGA.GroupingCrossOver.NPoint">
+            <summary>
+             N-point cut
+            </summary>
+        </member>
+        <member name="T:NTU.IIE.CALAB.OrganismGA.GroupingMutation">
+            <summary>
+             Enumerations of mutation operators for a grouping encoded GA module.
+            </summary>
+        </member>
+        <member name="F:NTU.IIE.CALAB.OrganismGA.GroupingMutation.RandomMutation">
+            <summary>
+             Randomly select an item and randomly set its new group.
+            </summary>
+        </member>
+        <member name="F:NTU.IIE.CALAB.OrganismGA.GroupingMutation.Inversion">
+            <summary>
+             Randomly select a segments of items and swap their groups from both ends pair-widely.
+            </summary>
+        </member>
+        <member name="T:NTU.IIE.CALAB.OrganismGA.IntegerNumberGAModule">
+            <summary>
+             GA solver for integer number encoded chromosome module.
+            </summary>
+        </member>
+        <member name="M:NTU.IIE.CALAB.OrganismGA.IntegerNumberGAModule.#ctor(System.Int32,System.Int32[],System.Int32[])">
+            <summary>
+             Constructor of an integer number encoded GA module.
+            </summary>
+            <param name="numberOfVariables"> number of variables </param>
+            <param name="mins"> lower bound array </param>
+            <param name="maxs"> upper bound array </param>
+        </member>
+        <member name="M:NTU.IIE.CALAB.OrganismGA.IntegerNumberGAModule.ToString">
+            <summary>
+             The title of this module.
+            </summary>
+            <returns> Module title </returns>
+        </member>
+        <member name="P:NTU.IIE.CALAB.OrganismGA.IntegerNumberGAModule.ParameterSettingsText">
+            <summary>
+             The text content describing the parameter settings defined in this module.
+            </summary>
+        </member>
+        <member name="P:NTU.IIE.CALAB.OrganismGA.IntegerNumberGAModule.CrossoverType">
+            <summary>
+             Selected crossover operator type.
+            </summary>
+        </member>
+        <member name="P:NTU.IIE.CALAB.OrganismGA.IntegerNumberGAModule.CrossoverCuts">
+            <summary>
+             Number of cuts in crossover operation
+            </summary>
+        </member>
+        <member name="M:NTU.IIE.CALAB.OrganismGA.IntegerNumberGAModule.BridgeChromosomeWithOrganism(System.Object[][],System.Int32)">
+            <summary>
+             Function for this module to hook up the organism structure. Note that a module simply
+             deal with a chromosome segment of an organism. Therefore, this function is to map 
+             the chromosome segment of this module to the given organisms.
+            </summary>
+            <param name="organisms"> The set of organisms to be linked </param>
+            <param name="sequence"> The sequence id of the chromosome targeted by this module </param>
+        </member>
+        <member name="M:NTU.IIE.CALAB.OrganismGA.IntegerNumberGAModule.InitializePopulation">
+            <summary>
+             Overridden function that randomly assign integral gene values to the population.
+            </summary>
+        </member>
+        <member name="M:NTU.IIE.CALAB.OrganismGA.IntegerNumberGAModule.GenerateAPairOfCrossoveredOffspring(System.Int32,System.Int32,System.Int32,System.Int32)">
+            <summary>
+             Own crossover operation procedure to generate and set gene values for a pair of 
+             crossovered offspring by referring to a given pair of parent indexes 
+            </summary>
+            <param name="fartherIdx"> index of farther chromosome </param>
+            <param name="motherIdx"> index of mother chromosome  </param>
+            <param name="child1Idx"> index of child 1 chromosome </param>
+            <param name="child2Idx"> index of child 2 chromosome </param>
+        </member>
+        <member name="M:NTU.IIE.CALAB.OrganismGA.IntegerNumberGAModule.MutateAParentToSetAMutatedChild(System.Int32,System.Int32)">
+            <summary>
+             Function to let this module to generate a mutated offspring chromosome from a given parent.
+            </summary>
+            <param name="parentIdx"> Index to the parent organism </param>
+            <param name="childIdx"> Index to the child to be generated </param>
+            <returns> Success or not </returns>
+        </member>
+        <member name="M:NTU.IIE.CALAB.OrganismGA.IntegerNumberGAModule.PerformGeneBasedMutation(System.Double,System.Int32)">
+            <summary>
+             Function to let this module to perform overall mutation operation. The module need 
+             to determine those genes and associated parent chromosomes to create offspring
+             chromosome.
+            </summary>
+            <param name="mutationRate"> Specified mutation rate</param>
+            <param name="startIdx"> The start index of offspring from mutation </param>
+            <returns> Number of mutated children created </returns>
+        </member>
+        <member name="T:NTU.IIE.CALAB.OrganismGA.IntegerNumberCrossover">
+            <summary>
+             Types of crossover operators
+            </summary>
+        </member>
+        <member name="F:NTU.IIE.CALAB.OrganismGA.IntegerNumberCrossover.Convex">
+            <summary>
+             Convex crossover: X'= alpha X1 + beta X2; x" = beta X1 +alpha X2; alpha + beta = 1; alpha, beat > 0
+            </summary>
+        </member>
+        <member name="F:NTU.IIE.CALAB.OrganismGA.IntegerNumberCrossover.Affine">
+            <summary>
+             Affine crossover: X'= alpha X1 + beta X2; x" = beta X1 +alpha X2;alpha + beta = 1; alpha, beat belong to R
+            </summary>
+        </member>
+        <member name="F:NTU.IIE.CALAB.OrganismGA.IntegerNumberCrossover.Linear">
+            <summary>
+             Linear crossover:  X'= alpha X1 + beta X2; x" = beta X1 +alpha X2;alpha, beat belong to R
+            </summary>
+        </member>
+        <!-- 已忽略成員 "F:NTU.IIE.CALAB.OrganismGA.IntegerNumberCrossover.LargeValueDivided" 中格式錯誤的 XML 註解 -->
+        <!-- 已忽略成員 "F:NTU.IIE.CALAB.OrganismGA.IntegerNumberCrossover.SmallValueDivided" 中格式錯誤的 XML 註解 -->
+        <!-- 已忽略成員 "F:NTU.IIE.CALAB.OrganismGA.IntegerNumberCrossover.MiddleAndOneEndSegments" 中格式錯誤的 XML 註解 -->
+        <!-- 已忽略成員 "F:NTU.IIE.CALAB.OrganismGA.IntegerNumberCrossover.TwoEndSegments" 中格式錯誤的 XML 註解 -->
+        <member name="T:NTU.IIE.CALAB.OrganismGA.MetaFileHelper">
+            <summary>
+             Interop class for usage of meta file
+            </summary>
+        </member>
+        <member name="M:NTU.IIE.CALAB.OrganismGA.MetaFileHelper.CopyEMFToClipboard(System.IntPtr,System.Drawing.Imaging.Metafile)">
+            <summary>
+             Copy an EMF file to clipboard for pasting.
+            </summary>
+            <param name="hWnd"> Handler to the EMF object </param>
+            <param name="file"> Meta file </param>
+            <returns></returns>
+        </member>
+        <member name="T:NTU.IIE.CALAB.OrganismGA.PermutationGAModule">
+            <summary>
+             GA operation module for an integer permutation encoding chromosome.
+            </summary>
+        </member>
+        <member name="M:NTU.IIE.CALAB.OrganismGA.PermutationGAModule.#ctor(System.Int32)">
+            <summary>
+             Constructor of an integral permutation encoding GA module.
+            </summary>
+            <param name="numberOfVariables"> number of variables </param>
+        </member>
+        <member name="M:NTU.IIE.CALAB.OrganismGA.PermutationGAModule.ToString">
+            <summary>
+             The title of this module.
+            </summary>
+            <returns> Module title </returns>
+        </member>
+        <member name="P:NTU.IIE.CALAB.OrganismGA.PermutationGAModule.ParameterSettingsText">
+            <summary>
+             The text content describing the parameter settings defined in this module.
+            </summary>
+        </member>
+        <member name="P:NTU.IIE.CALAB.OrganismGA.PermutationGAModule.CrossoverType">
+            <summary>
+             Permutation encoding crossover type; whose value is an instance of enum type PermutationCrossover
+            </summary>
+        </member>
+        <member name="P:NTU.IIE.CALAB.OrganismGA.PermutationGAModule.MutationType">
+            <summary>
+             Mutation type for an integer permutation encoding GA problem; whose value is an instance of enum type PermutationMutation
+            </summary>
+        </member>
+        <member name="M:NTU.IIE.CALAB.OrganismGA.PermutationGAModule.BridgeChromosomeWithOrganism(System.Object[][],System.Int32)">
+            <summary>
+             Function for this module to hook up the organism structure. Note that a module simply
+             deal with a chromosome segment of an organism. Therefore, this function is to map 
+             the chromosome segment of this module to the given organisms.
+            </summary>
+            <param name="organisms"> The set of organisms to be linked </param>
+            <param name="sequence"> The sequence id of the chromosome targeted by this module </param>
+        </member>
+        <member name="M:NTU.IIE.CALAB.OrganismGA.PermutationGAModule.InitializePopulation">
+            <summary>
+             Overridden function that randomly assign sequencing gene values to the population
+            </summary>
+        </member>
+        <member name="M:NTU.IIE.CALAB.OrganismGA.PermutationGAModule.GenerateAPairOfCrossoveredOffspring(System.Int32,System.Int32,System.Int32,System.Int32)">
+            <summary>
+             Perform regular crossover operation on a pair of parents and set gene values to a pair of children
+            </summary>
+            <param name="fartherIdx"> farther index on the chromosome array </param>
+            <param name="motherIdx"> mother index on the chromosome array </param>
+            <param name="child1Idx"> the first child index on the chromosome array </param>
+            <param name="child2Idx"> the second child index on the chromosome array </param>
+        </member>
+        <member name="M:NTU.IIE.CALAB.OrganismGA.PermutationGAModule.MutateAParentToSetAMutatedChild(System.Int32,System.Int32)">
+            <summary>
+             Overridden mutation operations on permutation encoding GA segment.
+            </summary>
+        </member>
+        <member name="M:NTU.IIE.CALAB.OrganismGA.PermutationGAModule.shuffle(System.Int32[])">
+            <summary>
+             Helping function that randomly shuffles the given array of permutation encoded integral array.
+            </summary>
+            <param name="array"> the list of integers </param>
+        </member>
+        <member name="M:NTU.IIE.CALAB.OrganismGA.PermutationGAModule.ConsecutiveEvaluationForHeuristicCX(System.Int32,System.Int32,System.Int32)">
+            <summary>
+             A function used in heuristic crossover operation
+            </summary>
+            <param name="step"></param>
+            <param name="cid"></param>
+            <param name="geneNext"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NTU.IIE.CALAB.OrganismGA.PermutationGAModule.CustomCrossoverAPairOfParentsGetTwoChildren(System.Int32,System.Int32,System.Int32,System.Int32)">
+            <summary>
+             To be implemented by derived classes.
+            </summary>
+            <param name="fartherIdx"></param>
+            <param name="motherIdx"></param>
+            <param name="child1Idx"></param>
+            <param name="child2Idx"></param>
+            <returns></returns>
+        </member>
+        <member name="T:NTU.IIE.CALAB.OrganismGA.PermutationCrossover">
+            <summary>
+            Newly defined enumeration for flagging the types of mutations and crossover operation on 
+            permutation-encoded GA
+            Defined canonical crossover operators for a permutation encoded GA model
+            </summary>
+        </member>
+        <member name="F:NTU.IIE.CALAB.OrganismGA.PermutationCrossover.PartialMapX">
+            <summary>
+            Canonical crossover operator: partial mapped crossover operator
+            </summary>
+        </member>
+        <member name="F:NTU.IIE.CALAB.OrganismGA.PermutationCrossover.OrderX">
+            <summary>
+            Canonical crossover operator: ordered crossover operator
+            </summary>
+        </member>
+        <member name="F:NTU.IIE.CALAB.OrganismGA.PermutationCrossover.PositionBasedX">
+            <summary>
+            Canonical crossover operator: position-based crossover operator
+            </summary>
+        </member>
+        <member name="F:NTU.IIE.CALAB.OrganismGA.PermutationCrossover.OrderBasedX">
+            <summary>
+            Canonical crossover operator: ordered-based crossover operator
+            </summary>
+        </member>
+        <member name="F:NTU.IIE.CALAB.OrganismGA.PermutationCrossover.CycleX">
+            <summary>
+            Canonical crossover operator: cycle crossover operator
+            </summary>
+        </member>
+        <member name="F:NTU.IIE.CALAB.OrganismGA.PermutationCrossover.SubtourX">
+            <summary>
+            Canonical crossover operator: sub tour crossover operator
+            </summary>
+        </member>
+        <member name="F:NTU.IIE.CALAB.OrganismGA.PermutationCrossover.Heuristic">
+            <summary>
+             TSP-based Heuristic crossover operator.
+            </summary>
+        </member>
+        <member name="F:NTU.IIE.CALAB.OrganismGA.PermutationCrossover.Custom">
+            <summary>
+             Customer supplied crossover operator.
+            </summary>
+        </member>
+        <member name="T:NTU.IIE.CALAB.OrganismGA.PermutationMutation">
+            <summary>
+             Defined mutation types for a permutation encoded GA model
+            </summary>
+        </member>
+        <member name="F:NTU.IIE.CALAB.OrganismGA.PermutationMutation.Inversion">
+            <summary>
+            Canonical mutation operator 
+            </summary>
+        </member>
+        <member name="F:NTU.IIE.CALAB.OrganismGA.PermutationMutation.Swapped">
+            <summary>
+            Canonical mutation operator 
+            </summary>
+        </member>
+        <member name="F:NTU.IIE.CALAB.OrganismGA.PermutationMutation.Insertion">
+            <summary>
+            Canonical mutation operator 
+            </summary>
+        </member>
+        <member name="F:NTU.IIE.CALAB.OrganismGA.PermutationMutation.Displacement">
+            <summary>
+            Canonical mutation operator 
+            </summary>
+        </member>
+        <member name="F:NTU.IIE.CALAB.OrganismGA.PermutationMutation.ReciprocalExchange">
+            <summary>
+            Canonical mutation operator 
+            </summary>
+        </member>
+        <member name="F:NTU.IIE.CALAB.OrganismGA.PermutationMutation.Custom">
+            <summary>
+             Customer mutation operator
+            </summary>
+        </member>
+        <member name="T:NTU.IIE.CALAB.OrganismGA.RealNumberGAModule">
+            <summary>
+             GA solver for real number encoded chromosome module.
+            </summary>
+        </member>
+        <member name="M:NTU.IIE.CALAB.OrganismGA.RealNumberGAModule.#ctor(System.Int32,System.Double[],System.Double[])">
+            <summary>
+             Constructor of a real number encoding GA module.
+            </summary>
+            <param name="numberOfVariables"> number of variables </param>
+            <param name="mins"> lower bound array </param>
+            <param name="maxs"> upper bound array </param>
+        </member>
+        <member name="M:NTU.IIE.CALAB.OrganismGA.RealNumberGAModule.ToString">
+            <summary>
+             The title of this module.
+            </summary>
+            <returns> Module title </returns>
+        </member>
+        <member name="P:NTU.IIE.CALAB.OrganismGA.RealNumberGAModule.ParameterSettingsText">
+            <summary>
+             The text content describing the parameter settings defined in this module.
+            </summary>
+        </member>
+        <member name="P:NTU.IIE.CALAB.OrganismGA.RealNumberGAModule.CrossoverCuts">
+            <summary>
+             Number of Cuts in crossover operation
+            </summary>
+                    
+        </member>
+        <member name="P:NTU.IIE.CALAB.OrganismGA.RealNumberGAModule.CrossoverType">
+            <summary>
+             Selected crossover operator type
+            </summary>
+        </member>
+        <member name="M:NTU.IIE.CALAB.OrganismGA.RealNumberGAModule.BridgeChromosomeWithOrganism(System.Object[][],System.Int32)">
+            <summary>
+             Function for this module to hook up the organism structure. Note that a module simply
+             deal with a chromosome segment of an organism. Therefore, this function is to map 
+             the chromosome segment of this module to the given organisms.
+            </summary>
+            <param name="organisms"> The set of organisms to be linked </param>
+            <param name="sequence"> The sequence id of the chromosome targeted by this module </param>
+        </member>
+        <member name="M:NTU.IIE.CALAB.OrganismGA.RealNumberGAModule.InitializePopulation">
+            <summary>
+             Overridden function that randomly assign sequencing gene values to the population
+            </summary>
+        </member>
+        <member name="M:NTU.IIE.CALAB.OrganismGA.RealNumberGAModule.GenerateAPairOfCrossoveredOffspring(System.Int32,System.Int32,System.Int32,System.Int32)">
+            <summary>
+             Perform regular crossover operation on a pair of parents and set gene values to a pair of children
+            </summary>
+            <param name="fartherIdx"> farther index on the chromosome array </param>
+            <param name="motherIdx"> mother index on the chromosome array </param>
+            <param name="child1Idx"> the first child index on the chromosome array </param>
+            <param name="child2Idx"> the second child index on the chromosome array </param>
+        </member>
+        <member name="M:NTU.IIE.CALAB.OrganismGA.RealNumberGAModule.MutateAParentToSetAMutatedChild(System.Int32,System.Int32)">
+            <summary>
+             Function to let this module to generate a mutated offspring chromosome from a given parent.
+            </summary>
+            <param name="parentIdx"> Index to the parent organism </param>
+            <param name="childIdx"> Index to the child to be generated </param>
+            <returns> Success or not </returns>
+        </member>
+        <member name="M:NTU.IIE.CALAB.OrganismGA.RealNumberGAModule.PerformGeneBasedMutation(System.Double,System.Int32)">
+            <summary>
+             Function to let this module to perform overall mutation operation. The module need 
+             to determine those genes and associated parent chromosomes to create offspring
+             chromosome.
+            </summary>
+            <param name="mutationRate"> Specified mutation rate</param>
+            <param name="startIdx"> The start index of offspring from mutation </param>
+            <returns> Number of mutated children created </returns>
+        </member>
+        <member name="T:NTU.IIE.CALAB.OrganismGA.RealNumberCrossover">
+            <summary>
+             Types of crossover operators
+            </summary>
+        </member>
+        <member name="F:NTU.IIE.CALAB.OrganismGA.RealNumberCrossover.Convex">
+            <summary>
+             Convex crossover: X'= alpha X1 + beta X2; x" = beta X1 +alpha X2; alpha + beta = 1; alpha, beat > 0
+            </summary>
+        </member>
+        <member name="F:NTU.IIE.CALAB.OrganismGA.RealNumberCrossover.Affine">
+            <summary>
+             Affine crossover: X'= alpha X1 + beta X2; x" = beta X1 +alpha X2;alpha + beta = 1; alpha, beat belong to R
+            </summary>
+        </member>
+        <member name="F:NTU.IIE.CALAB.OrganismGA.RealNumberCrossover.Linear">
+            <summary>
+             Linear crossover:  X'= alpha X1 + beta X2; x" = beta X1 +alpha X2;alpha, beat belong to R
+            </summary>
+        </member>
+        <!-- 已忽略成員 "F:NTU.IIE.CALAB.OrganismGA.RealNumberCrossover.LargeValueDivided" 中格式錯誤的 XML 註解 -->
+        <!-- 已忽略成員 "F:NTU.IIE.CALAB.OrganismGA.RealNumberCrossover.SmallValueDivided" 中格式錯誤的 XML 註解 -->
+        <!-- 已忽略成員 "F:NTU.IIE.CALAB.OrganismGA.RealNumberCrossover.MiddleAndOneEndSegments" 中格式錯誤的 XML 註解 -->
+        <!-- 已忽略成員 "F:NTU.IIE.CALAB.OrganismGA.RealNumberCrossover.TwoEndSegments" 中格式錯誤的 XML 註解 -->
+        <!-- 已忽略成員 "F:NTU.IIE.CALAB.OrganismGA.RealNumberCrossover.FowardAndBackwardMiddleSegments" 中格式錯誤的 XML 註解 -->
+    </members>
+</doc>
